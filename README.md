@@ -16,6 +16,7 @@ To use this example the Arduino nRF528x Mbed OS board package must be installed.
 
 These can all be installed using by using Library Manager and Board Manager. 
 This is an example of a serial plotter plot with all sensor data enabled.
+
 ![Serial Plotter Example Output](https://dalegi.com/wp-content/uploads/sites/6/2020/06/serialPlotExampleNano33BLESense.png)
 
 ## Configuration
