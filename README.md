@@ -5,7 +5,7 @@ An example program for the Arduino Nano 33 BLE Sense that outputs CSV data for a
 - Simple example for outputting raw sensor data from the Arduno Nano 33 BLE Sense through Serial.
 - Ability to plot data using Serial Plotter.
 - Simple macro based configuration for which sensors output data.
-- Easy way to check if sensor functionality
+- Easy way to check sensor functionality
 
 ## Usage
 To use this example the Arduino nRF528x Mbed OS board package must be installed. It also requires the following libraries to be installed:
