@@ -1,5 +1,7 @@
 # nano-33-sense-serial-example
 An example program for the Arduino Nano 33 BLE Sense that outputs CSV data for all sensors through UART.
+For a more complete description, see [The Hacky Super Loop Arduino Nano 33 BLE Sense Example You Have Been Waiting For](https://dalegi.com/2020/06/09/the-hacky-super-loop-arduino-nano-33-ble-sense-example-you-have-been-waiting-for/)
+
 
 ## Features
 - Simple example for outputting raw sensor data from the Arduno Nano 33 BLE Sense through Serial.
@@ -9,10 +11,10 @@ An example program for the Arduino Nano 33 BLE Sense that outputs CSV data for a
 
 ## Usage
 To use this example the Arduino nRF528x Mbed OS board package must be installed. It also requires the following libraries to be installed:
-- [https://github.com/arduino-libraries/Arduino_APDS9960](Arduino_APDS9960) 
-- [https://github.com/arduino-libraries/Arduino_HTS221](Arduino_HTS221)
-- [https://github.com/arduino-libraries/Arduino_LPS22HB](Arduino_LPS22HB)
-- [https://github.com/arduino-libraries/Arduino_LSM9DS1](Arduino_LSM9DS1)
+- [Arduino_APDS9960](https://github.com/arduino-libraries/Arduino_APDS9960)
+- [Arduino_HTS221](https://github.com/arduino-libraries/Arduino_HTS221)
+- [Arduino_LPS22HB](https://github.com/arduino-libraries/Arduino_LPS22HB)
+- [Arduino_LSM9DS1](https://github.com/arduino-libraries/Arduino_LSM9DS1)
 
 These can all be installed using by using Library Manager and Board Manager. 
 This is an example of a serial plotter plot with all sensor data enabled.
