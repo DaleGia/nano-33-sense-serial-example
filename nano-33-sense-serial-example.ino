@@ -1,3 +1,28 @@
+
+/*
+  nano-33-sense-serial-example.ino
+  Copyright (c) 2020 Dale Giancono. All rights reserved..
+  This program outputs all raw sensor data from the Arduino Nano 33 BLE 
+  Sense board via serial at a 20Hz rate. It also calculates the RMS 
+  value of the microphone buffer and outputs that data. It is intended
+  as a quick way to become familiar with some of the sensor libraries 
+  available with the Nano 33 BLE Sense, and highlight some of the 
+  difficulties when using a super loop architecture with this board.
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 /**********/
 /*INCLUDES*/
 /**********/
@@ -22,10 +47,10 @@
  * can be viewed with serial plotter. Having them all true creates a pretty
  * meaningless graph, as the scaling will be way off for each sensor, and there
  * will be too much data to view */
-#define SERIAL_PLOT_MP34DT05    (false)
-#define SERIAL_PLOT_LSM9DS1     (false)
-#define SERIAL_PLOT_APDS9960    (false)
-#define SERIAL_PLOT_LPS22HB     (false)
+#define SERIAL_PLOT_MP34DT05    (true)
+#define SERIAL_PLOT_LSM9DS1     (true)
+#define SERIAL_PLOT_APDS9960    (true)
+#define SERIAL_PLOT_LPS22HB     (true)
 #define SERIAL_PLOT_HTS221      (true)
 
 /* This value was also used in the PDM example, seems like a good enough reason to
@@ -105,10 +130,10 @@ void setup()
   {
     /* Gain values can be from 0 to 80 (around 38db). Check out nrf_pdm.h
      * from the nRF528x-mbedos core to confirm this. */
-    /* This has to be down after PDM.begin() is called as begin() always
+    /* This has to be done after PDM.begin() is called as begin() always
      *  sets the gain as the default PDM.h value (20).
      */
-    PDM.setGain(30);
+    PDM.setGain(50);
   }
 
   /* IMU setup for LSM9DS1*/
@@ -249,6 +274,7 @@ void loop()
   if(microphoneBufferReadyFlag)
   {
     Micophone_computeRMSValue();
+    microphoneBufferReadyFlag = false;
   }
 }
 
