@@ -38,8 +38,6 @@
 /* For HTS221 Temperature and humidity sensor */
 #include <Arduino_HTS221.h>
 
-#include <arm_math.h>
-
 /********/
 /*MACROS*/
 /********/
@@ -187,6 +185,8 @@ void setup()
   microphoneBufferReadyFlag = false;
 }
 
+char buffer[200];
+
 void loop()
 {
   /* The sensors that use I2C must be checked to see if data is available, so
@@ -209,21 +209,54 @@ void loop()
   if((newMillis - oldMillis) % 50)
   {
 #if (SERIAL_PLOT_MP34DT05 == true)
-    Serial.printf("%d,", microphoneRMSValue);
+    memset(buffer, 0 , sizeof(buffer));
+    snprintf(buffer, sizeof(buffer), "%d,", microphoneRMSValue);
+    Serial.print(buffer);
 #endif
 #if (SERIAL_PLOT_LSM9DS1 == true)
-    Serial.printf("%f,%f,%f,", accelerometerX, accelerometerY, accelerometerZ);
-    Serial.printf("%f,%f,%f,", gyroscopeX, gyroscopeY, gyroscopeZ);
-    Serial.printf("%f,%f,%f,", magneticX, magneticY, magneticZ);
+    memset(buffer, 0 , sizeof(buffer));
+    snprintf(
+      buffer, 
+      sizeof(buffer), 
+      "%f,%f,%f,%f,%f,%f,%f,%f,%f,", 
+      accelerometerX,
+      accelerometerY,
+      accelerometerZ,
+      gyroscopeX,
+      gyroscopeY,
+      gyroscopeZ,
+      magneticX,
+      magneticY,
+      magneticZ);
+    Serial.print(buffer);
 #endif
 #if (SERIAL_PLOT_LPS22HB == true)
-    Serial.printf("%f,", barometricPressure);
+    memset(buffer, 0 , sizeof(buffer));
+    snprintf(buffer, sizeof(buffer), "%f,", barometricPressure);
+    Serial.print(buffer);
 #endif
 #if (SERIAL_PLOT_APDS9960 == true)
-    Serial.printf("%d,%d,%d,%d,%d,", proximity, gesture, colourR, colourG, colourB);
+    memset(buffer, 0 , sizeof(buffer));
+    snprintf(
+      buffer, 
+      sizeof(buffer), 
+      "%d,%d,%d,%d,%d", 
+      proximity,
+      gesture,
+      colourR,
+      colourG,
+      colourB);
+    Serial.print(buffer);
 #endif
 #if (SERIAL_PLOT_HTS221 == true)
-    Serial.printf("%f, %f", temperature, humidity);
+    memset(buffer, 0 , sizeof(buffer));
+    snprintf(
+      buffer, 
+      sizeof(buffer), 
+      "%f,%f,", 
+      temperature,
+      humidity);
+    Serial.print(buffer);
 #endif
     Serial.println();
   }
@@ -291,5 +324,10 @@ void Microphone_availablePDMDataCallback()
 
 void Micophone_computeRMSValue(void)
 {
-  arm_rms_q15((q15_t*)microphoneBuffer, MICROPHONE_BUFFER_SIZE_IN_WORDS, (q15_t*)&microphoneRMSValue);
+  uint16_t sum = 0;
+  for(int i = 0; i < MICROPHONE_BUFFER_SIZE_IN_WORDS; i++)
+  {
+    sum = sum + pow(microphoneBuffer[i], 2);
+  }
+  microphoneRMSValue = sqrt(sum/MICROPHONE_BUFFER_SIZE_IN_WORDS);
 }
