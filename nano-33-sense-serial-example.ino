@@ -216,11 +216,10 @@ void loop()
     Serial.printf("%f,%f,%f,", gyroscopeX, gyroscopeY, gyroscopeZ);
     Serial.printf("%f,%f,%f,", magneticX, magneticY, magneticZ);
 #endif
-#if (SERIAL_PLOT_APDS9960 == true)
-
+#if (SERIAL_PLOT_LPS22HB == true)
     Serial.printf("%f,", barometricPressure);
 #endif
-#if (SERIAL_PLOT_LPS22HB == true)
+#if (SERIAL_PLOT_APDS9960 == true)
     Serial.printf("%d,%d,%d,%d,%d,", proximity, gesture, colourR, colourG, colourB);
 #endif
 #if (SERIAL_PLOT_HTS221 == true)
